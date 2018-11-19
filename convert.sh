@@ -1,6 +1,2 @@
 #!/bin/sh
-echo "Files to convert:"
-ls -la /dumps
-echo "Starting conversion"
-cd /dumps
-find . -type f -exec /app/run.sh {} \;
+curl $(DUMP_URL) | java -jar /app/mwdumper.jar --format=sql:1.25 - | mysql -u $(DB_USER) -D $(DB_DATABASE) -h $(DB_HOST) -p $(DB_PASSWORD)
